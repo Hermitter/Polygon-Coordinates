@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Zone Drawer</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <meta charset="utf-8"/>
+    </head>
+
+    <body>
+        <!--Tools-->
+        <div id="button-container">
+                <button id="draw-points-tool" class="canvas-button"><img class="icon" src="images/pencil-icon.png"/></button>
+                <button id="move-points-tool" class="canvas-button"><img class="icon" src="images/move-icon.png"/></button>
+                <button id="delete-points-tool" class="canvas-button"><img class="icon" src="images/delete-icon.png"/></button>
+                <button id="coord-tool" class="canvas-button"><img class="icon" src="images/coordinate-icon.png"/></button>
+                <button onclick="fileSelectClick()" class="canvas-button"><img class="icon" src="images/file-icon.png"/><input style="display:none;" id="file_selected" type="file"/></button>
+                <button id="urlSelect" onclick="showPopup('url-insert-overlay')" class="canvas-button"><img class="icon" src="images/url-icon.png"/></button>
+        </div>
+        <!--Draw Board-->
+        <div id="drawing-board">
+            <!--Loads User Image/Video-->
+            <div id="media-container"></div>
+            <!--Drawing Canvas-->
+            <div id="canvas-container">
+                    <canvas width="0" height="0" id="canvas"></canvas>
+            </div>
+        </div>
+
+        <!--Drag&Drop Overlay-->
+        <div id="drop_zone"></div>
+
+        <!--URL Insert Overlay-->
+        <div id="url-insert-overlay">
+            <input id="url-input-field" type="url" placeholder="http://www.example.com/image.jpg"></input>
+            <button id="acceptUrl" class="url-button" onclick="setUrlMedia()">Accept</button>
+            <button id="cancelUrl" class="url-button" onclick="hidePopup('url-insert-overlay')">Exit</button>
+            <div onclick="hidePopup('url-insert-overlay')" style="text-align:center"></div>
+        </div>
+
+        <!--Shape Coordinates Overlay-->
+        <div id="shape-coordinates-overlay">
+            <p id="shape-coordinates-result" placeholder="http://www.example.com/image.jpg">Testing</p>
+            <button id="acceptUrl" class="url-button" onclick="hidePopup('shape-coordinates-overlay')">Accept</button>
+            <div onclick="hidePopup('shape-coordinates-overlay')" style="text-align:center"></div>
+        </div>
+
+        <script type="text/javascript" src="media.js"></script>
+        <script type="text/javascript" src="canvas.js"></script>
+    </body>
+</html>
