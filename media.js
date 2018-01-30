@@ -42,7 +42,8 @@ window.addEventListener('resize', function() {
 function processFile(file){
     var mediaUrl = URL.createObjectURL(file);//user's file url link
     //If Image File\\
-    if (file.type !== 'image/gif' && file.type !== 'image/gifv' && file.type.match('image.*')) {
+    console.log(file.type);
+    if (file.type.match('image.*')) {
         var image = new Image();//canvas image object
         image.src = mediaUrl;//point to user file
         media.innerHTML = '<img id="user-media" src="'+mediaUrl+'">'; //replace exsisting media
@@ -141,19 +142,47 @@ function hidePopup(id) {
     popup.style.height = '0%';
 }
 
+// - read user inputed url
 function setUrlMedia(){
     var url = document.getElementById('url-input-field').value;//input field value
-    media.innerHTML = '<img id="user-media" src="'+url+'">';//load media from url
-    var userMedia = document.getElementById('user-media');
-    userMedia.addEventListener("load", urlLoaded);
+    var fileType = url.split(/\#|\?/)[0].split('.').pop().trim().toLowerCase();//.jpg,.mp4,etc...
+    console.log('Uploaded: '+fileType);//log file type
+    //if html supported video
+    if (fileType === 'mp4' || fileType === 'webm' || fileType === 'ogg'){
+        media.innerHTML = '<video id="user-media" muted autoplay loop src="'+url+'">';//add video to html
+        fileType = 'video';//declare file as a video
+    }
+    //else assume it's an image file
+    else{
+        media.innerHTML = '<img id="user-media" src="'+url+'">';//add image to html
+        fileType = 'image';//declare file as a image
+    }
+    var userMedia = document.getElementById('user-media');//get media element
+    userMedia.addEventListener('loadedmetadata', function(){urlLoaded('video');});//add video loaded event listener
+    userMedia.addEventListener('load', function(){urlLoaded('image');});//add image loaded event listener
 }
 
-function urlLoaded(){
+// - close url insert overlay
+function urlLoaded(mediaType){
+    //console.log("THIS IS A "+type);
     var userMedia = document.getElementById('user-media');
-    originalMediaWidth = userMedia.naturalWidth;//update original width
-    originalMediaHeight = userMedia.naturalHeight;//update original height
+    //if video
+    if (mediaType === 'video'){
+        originalMediaWidth = userMedia.videoWidth;//update original width
+        originalMediaHeight = userMedia.videoHeight;//update original height
+    }
+    //if image
+    else if (mediaType === 'image'){
+        originalMediaWidth = userMedia.naturalWidth;//update original width
+        originalMediaHeight = userMedia.naturalHeight;//update original height
+    }
+    //if unknown
+    else{
+        alert('error determining file type');
+    }
     resize();//resize media to fit screen size
-    hidePopup('url-insert-overlay')//hide url input field
+    hidePopup('url-insert-overlay');//hide url input field
     console.log('url loaded');
-    userMedia.removeEventListener("load", urlLoaded);
+    userMedia.removeEventListener('load', urlLoaded);
+    userMedia.removeEventListener('loadedmetadata', urlLoaded);
 }
