@@ -107,7 +107,8 @@ document.addEventListener("keydown", function (event) {
 // - Runs function for tool in use
 function activeToolLogic(){
     if(activeTool === 'none'){
-        return;//nothing happens
+        mouse.clickedCanvas = false;//set mouse as unclicked
+        return;//exit
     }
     else if (activeTool === 'draw-points-tool'){
         drawToolLogic(mouse.clickedCanvas);
@@ -168,7 +169,7 @@ function drawToolLogic(canvasClicked){
             console.log(userShape.points);//log new shape array
         }
 
-        //if over first point and ready to close shape
+        //if over first shape point and ready to close shape
         if(userShape.points.length > 1 && mouseOnPoint(userShape.points[0])){
             console.log('over finisher point');
             drawCircle(userShape.points[0].x*(canvas.width/originalMediaWidth), userShape.points[0].y*(canvas.height/originalMediaHeight), 7, 2, '#00ff00', 'fill');
