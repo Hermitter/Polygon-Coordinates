@@ -1,11 +1,12 @@
 ////////////////////////////
 //User Media
 ////////////////////////////
+var newMedia = false;
 var media = document.getElementById('media-container');
 var URL = window.URL || window.webkitURL;//object to construct URLs
 var originalMediaWidth;//store file width
 var originalMediaHeight;//store file height
-var mediaIsShrunk = false;
+var mediaIsShrunk = false;//is media resized smaller
 
 ////////////////////////////
 //File Select
@@ -40,6 +41,7 @@ window.addEventListener('resize', function() {
 ////////////////////////////
 // - read and save user selected file
 function processFile(file){
+    newMedia = true;//new media was imported
     var mediaUrl = URL.createObjectURL(file);//user's file url link
     //If Image File\\
     console.log(file.type);
@@ -144,6 +146,7 @@ function hidePopup(id) {
 
 // - read user inputed url
 function setUrlMedia(){
+    newMedia = true;//new media was imported
     var url = document.getElementById('url-input-field').value;//input field value
     var fileType = url.split(/\#|\?/)[0].split('.').pop().trim().toLowerCase();//.jpg,.mp4,etc...
     console.log('Uploaded: '+fileType);//log file type
@@ -164,7 +167,6 @@ function setUrlMedia(){
 
 // - close url insert overlay
 function urlLoaded(mediaType){
-    //console.log("THIS IS A "+type);
     var userMedia = document.getElementById('user-media');
     //if video
     if (mediaType === 'video'){
