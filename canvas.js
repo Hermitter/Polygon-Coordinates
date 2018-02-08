@@ -16,7 +16,6 @@ var activeTool = 'none';
 //user Custom Shape
 userShape = {
     points: [],         //points that connect shape
-    adjustedPoints: [], //points adjusted for dimension changes
     finished: false,    //boolean of shape completion
     color: '#f00'       //shape line color
 };
@@ -26,6 +25,12 @@ userShape = {
 ///////////////////////////
 //Animate Canvas
 function animate(){
+    //remove previous polygon
+    if(newMedia){
+        userShape.points = [];//reset user points
+        userShape.finished = false;
+        newMedia = false;
+    }
     //background
     ctx.clearRect(0, 0, canvas.width, canvas.height);//clear background
 
@@ -84,7 +89,7 @@ document.getElementById('coord-tool').addEventListener('click', function(){
 // - Keyboard Shortcuts
 document.addEventListener("keydown", function (event) {
     //ctrl-z or meta-z
-    if ((event.ctrlKey  && event.code === "KeyZ") || (event.metaKey  &&  event.code === "KeyZ") && activeTool === 'draw-points-tool') {
+    if((event.ctrlKey  && event.code === "KeyZ") || (event.metaKey  &&  event.code === "KeyZ") && activeTool === 'draw-points-tool') {
         //cancel finished shape
         if(userShape.finished)
             userShape.finished = false;
