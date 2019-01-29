@@ -1,4 +1,4 @@
-# Polygon-Overlay
+# Polygon-Coordinates
 <img src="https://github.com/Hermitter/Polygon-Overlay/blob/master/images/demo.gif?raw=true">
 <p>Link: https://hermitter.github.io/Polygon-Overlay/</p>
 
