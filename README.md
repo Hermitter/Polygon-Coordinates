@@ -1,6 +1,6 @@
 # Polygon-Coordinates
 <img src="https://github.com/Hermitter/Polygon-Overlay/blob/master/images/demo.gif?raw=true">
-<p>Link: https://hermitter.github.io/Polygon-Overlay/</p>
+<p>Link: https://hermitter.github.io/Polygon-Coordinates/</p>
 
 # Overview
 This website allows you to upload an image/video file and draw a custom polygon over it. Once you finish drawing,
